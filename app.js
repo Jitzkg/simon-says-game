@@ -2,11 +2,11 @@ let gameSeq = [];
 let userSeq = [];
 let btns = ["red", "blue", "green", "orange"];
 let level = 0;
-let hghscore = 0;
 let started = false;
 let h2 = document.querySelector("h2");
 let body = document.querySelector("body");
-
+let hghscore = localStorage.getItem("highscore") || 0;
+high.innerHTML = `Highscore: <b>${hghscore}</b>`;
 
 ["keypress", "touchstart"].forEach(eventType => {
     document.addEventListener(eventType, function () {
@@ -42,13 +42,14 @@ function levelUp() {
 }
 function checkAnswer(idx) {
     
-    
+
     if (gameSeq[idx] === userSeq[idx]) {
             
         if (userSeq.length === gameSeq.length) {
-            if(hghscore < level) {
-                hghscore = level;
-                highScore.innerHTML = `Highscore: <b>${hghscore}</b>`;
+            if (hghscore < level ) {
+                hghscore = level ;
+                localStorage.setItem("highscore", hghscore);
+                high.innerHTML = `Highscore: <b>${hghscore}</b>`;
             }
             setTimeout(levelUp, 1000);
         }
@@ -59,6 +60,7 @@ function checkAnswer(idx) {
         setTimeout(function () {
             body.classList.remove("wrong");
         }, 300);
+        
         h2.innerHTML = `Your Score was <b>${level-1}</b> <br> Press Any Key to Restart`;
         started = false;
         gameSeq = [];
