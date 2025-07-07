@@ -6,18 +6,15 @@ let hghscore = 0;
 let started = false;
 let h2 = document.querySelector("h2");
 let body = document.querySelector("body");
-const heading = document.getElementById("game");
-const highScore = document.getElementById("high");
-const textWidth = heading.offsetWidth;
-const halfScreenWidth = window.innerWidth / 2-textWidth / 2;
-heading.style.transform = `translateX(${halfScreenWidth}px)`;
 
-document.addEventListener("keypress", function () {
-    if (!started) {
-        console.log("Game started");
-        started = true;
-        levelUp();
-    }
+
+["keypress", "touchstart"].forEach(eventType => {
+    document.addEventListener(eventType, function () {
+        if (!started) {
+            started = true;
+            levelUp();
+        }
+    });
 });
 
 function gameFlash(btn) {
